@@ -1,7 +1,7 @@
-﻿using Contact.Domain.Entities;
+﻿using Contact_ManageMent.Domain.Entities;
 using System.Linq.Expressions;
 
-namespace Contact.Domain.Repositories
+namespace Contact_ManageMent.Domain.Repositories
 {
     public interface IRepositoryBase<TEntity, TKey>
        where TEntity : class, IEntity<TKey>

@@ -1,6 +1,6 @@
-﻿namespace Contact.Domain.Entities
+﻿namespace Contact_ManageMent.Domain.Entities
 {
-    public class Contact:IEntity<Guid>
+    public class Contact : IEntity<Guid>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

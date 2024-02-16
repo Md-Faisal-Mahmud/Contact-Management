@@ -1,4 +1,4 @@
-﻿namespace Contact.Domain.UnitOfWorks
+﻿namespace Contact_ManageMent.Domain.UnitOfWorks
 {
     public interface IUnitOfWork : IDisposable
     {

@@ -1,4 +1,4 @@
-﻿namespace Contact.Domain.Entities
+﻿namespace Contact_ManageMent.Domain.Entities
 {
     public interface IEntity<T>
     {
