@@ -4,6 +4,8 @@ using Contact_Management.Application;
 using Contact_Management.Infrastructure.Services.Securities;
 using Contact_Management.Infrastructure.Services.Auth;
 using Contact_Management.Application.Services.Auth;
+using Contact_Management.Infrastructure.Services.Contact;
+using Contact_Management.Application.Services.Contact;
 
 namespace Contact_Management.Infrastructure
 {
@@ -19,6 +21,8 @@ namespace Contact_Management.Infrastructure
                 .InstancePerLifetimeScope();
             builder.RegisterType<AuthenticationService>().As<IAuthenticationService>()
                 .InstancePerLifetimeScope();
+            builder.RegisterType<ContactService>().As<IContactService>()
+               .InstancePerLifetimeScope();
 
             base.Load(builder);
         }

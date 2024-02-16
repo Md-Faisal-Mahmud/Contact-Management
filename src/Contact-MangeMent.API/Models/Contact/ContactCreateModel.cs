@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Contact_Management.Application.Services.Contact;
+using Contact_ManageMent.Domain.Entities;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 
@@ -38,14 +39,15 @@ namespace Contact_MangeMent.API.Models.Contact
             _contactService = scope.Resolve<IContactService>();
         }
 
-        public void Add()
+        public void Add(Guid currentUserID)
         {
             Contact_ManageMent.Domain.Entities.Contact contact = new Contact_ManageMent.Domain.Entities.Contact
             {
                 Name = Name,
                 Email = Email,
                 Phone = Phone,
-                Address = Address
+                Address = Address,
+                UserId = currentUserID
             };
 
             _contactService.AddContact(contact);   
