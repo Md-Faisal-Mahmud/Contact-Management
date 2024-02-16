@@ -42,7 +42,8 @@ namespace Contact_MangeMent.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var registrationResult = await _authenticationService.RegisterUserAsync(model.UserName, model.Password, model.Email);
+            model.ResolveDependency(_scope);
+            var registrationResult = await model.RegisterUserAsync();
 
             if (registrationResult)
             {
@@ -54,6 +55,7 @@ namespace Contact_MangeMent.API.Controllers
                 return BadRequest(ModelState);
             }
         }
+
 
 
 

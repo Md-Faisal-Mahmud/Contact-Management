@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Contact_MangeMent.API.Models;
 
 namespace Contact_MangeMent.API
 {
@@ -6,7 +7,7 @@ namespace Contact_MangeMent.API
     {
         protected override void Load(ContainerBuilder builder)
         {
-           
+            builder.RegisterType<RegisterModel>().AsSelf();
             base.Load(builder);
         }
     }
