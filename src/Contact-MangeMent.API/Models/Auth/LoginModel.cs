@@ -36,5 +36,9 @@ namespace Contact_MangeMent.API.Models.Auth
             return await _authenticationService.LoginAsync(Email, Password);
         }
 
+        public async Task logout()
+        {
+            await _authenticationService.LogoutAsync();
+        }
     }
 }

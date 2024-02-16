@@ -121,6 +121,11 @@ namespace Contact_Management.Infrastructure.Services.Auth
                 return (false, new { status = "error", message = "Invalid credentials" });
             }
         }
+
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
+        }
     }
 
 }

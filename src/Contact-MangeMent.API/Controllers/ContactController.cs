@@ -2,7 +2,9 @@
 using Contact_MangeMent.API.Models;
 using Contact_MangeMent.API.Models.Contact;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Claims;
 
 namespace Contact_MangeMent.API.Controllers
@@ -30,10 +32,7 @@ namespace Contact_MangeMent.API.Controllers
                 model.ResolveDependency(_scope);
                 // Get the currently logged-in user's ID
                 var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-
                 model.Add(Guid.Parse(userId));
-
                 return Ok("Contact Created Successfully!");
             }
             catch (Exception ex)
@@ -43,5 +42,7 @@ namespace Contact_MangeMent.API.Controllers
                 return StatusCode(500, "Oops! Something went wrong. Please try again later.");
             }
         }
+
+       
     }
 }

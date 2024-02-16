@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using Contact_ManageMent.Domain.Entities;
 using Contact_MangeMent.API.Models.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Contact_MangeMent.API.Controllers
 {
@@ -68,6 +70,17 @@ namespace Contact_MangeMent.API.Controllers
                 ModelState.AddModelError(string.Empty, "Login failed. Please check your credentials.");
                 return BadRequest(ModelState);
             }
+        }
+
+        [Authorize]
+        [SwaggerResponse(StatusCodes.Status200OK, "Logged out successfully", typeof(IResult))]
+        [HttpGet("Logout")]
+        public async Task<IActionResult> Logout(LoginModel model)
+        {
+            model.ResolveDependency(_scope);
+            await model.logout();
+
+            return Ok(new { status = "Success", message = "Logged out successfully" });
         }
 
     }
