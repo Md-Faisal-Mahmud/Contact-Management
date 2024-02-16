@@ -2,6 +2,7 @@
 using Contact_Management.Persistence.Membership;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace Contact_Management.Infrastructure.Services.Auth
 {
@@ -38,6 +39,17 @@ namespace Contact_Management.Infrastructure.Services.Auth
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");
+
+                // Assign a default claim to the new user
+                var claimResult = await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "User"));
+                if (!claimResult.Succeeded)
+                {
+                    // If adding the claim fails, log errors and rollback user creation
+                    _logger.LogError($"Failed to assign default claim to user: {string.Join(", ", claimResult.Errors.Select(e => e.Description))}");
+                    await _userManager.DeleteAsync(user);
+                    return false;
+                }
+
                 return true;
             }
 
