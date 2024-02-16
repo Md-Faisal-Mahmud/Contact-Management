@@ -4,11 +4,13 @@ using Contact_Management.Application;
 using Contact_Management.Persistence;
 using Contact_Management.Persistence.Extensions;
 using Contact_MangeMent.API;
+using Contact_MangeMent.API.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
 using System.Text;
 
@@ -61,6 +63,7 @@ try
 
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
+    builder.AddSwagger();
     builder.Services.AddSwaggerGen();
 
     var app = builder.Build();
@@ -71,7 +74,12 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contact Management");
+            c.DocumentTitle = "Contact Management API";
+            c.DocExpansion(DocExpansion.None);
+        });
     }
 
     app.UseCors();
