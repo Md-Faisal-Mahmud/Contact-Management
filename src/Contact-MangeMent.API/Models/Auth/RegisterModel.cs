@@ -2,7 +2,7 @@
 using Contact_Management.Application.Services.Auth;
 using System.ComponentModel.DataAnnotations;
 
-namespace Contact_MangeMent.API.Models
+namespace Contact_MangeMent.API.Models.Auth
 {
     public class RegisterModel
     {
@@ -26,7 +26,7 @@ namespace Contact_MangeMent.API.Models
         private IAuthenticationService _authenticationService;
         public RegisterModel()
         {
-            
+
         }
 
         public void ResolveDependency(ILifetimeScope scope)

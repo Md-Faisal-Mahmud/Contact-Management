@@ -1,8 +1,6 @@
 ﻿using Autofac;
-using Contact_Management.Application.Services.Auth;
-using Contact_Management.Application.Services.Securities;
-using Contact_Management.Persistence.Membership;
-using Contact_MangeMent.API.Models;
+using Contact_ManageMent.Domain.Entities;
+using Contact_MangeMent.API.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -71,7 +69,6 @@ namespace Contact_MangeMent.API.Controllers
                 return BadRequest(ModelState);
             }
         }
-
 
     }
 }

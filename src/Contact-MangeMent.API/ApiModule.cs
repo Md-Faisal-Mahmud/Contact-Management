@@ -1,5 +1,6 @@
 ﻿using Autofac;
-using Contact_MangeMent.API.Models;
+using Contact_MangeMent.API.Models.Auth;
+using Contact_MangeMent.API.Models.Contact;
 
 namespace Contact_MangeMent.API
 {
@@ -9,6 +10,7 @@ namespace Contact_MangeMent.API
         {
             builder.RegisterType<RegisterModel>().AsSelf();
             builder.RegisterType<LoginModel>().AsSelf();
+            builder.RegisterType<ContactCreateModel>().AsSelf();
             base.Load(builder);
         }
     }

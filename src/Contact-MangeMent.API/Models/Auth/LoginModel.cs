@@ -2,7 +2,7 @@
 using Contact_Management.Application.Services.Auth;
 using System.ComponentModel.DataAnnotations;
 
-namespace Contact_MangeMent.API.Models
+namespace Contact_MangeMent.API.Models.Auth
 {
     public class LoginModel
     {
@@ -15,10 +15,10 @@ namespace Contact_MangeMent.API.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        private IAuthenticationService _authenticationService;   
+        private IAuthenticationService _authenticationService;
         public LoginModel()
         {
-            
+
         }
 
         public void ResolveDependency(ILifetimeScope scope)

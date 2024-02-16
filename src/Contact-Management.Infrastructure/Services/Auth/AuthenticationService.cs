@@ -1,6 +1,6 @@
 ﻿using Contact_Management.Application.Services.Auth;
 using Contact_Management.Application.Services.Securities;
-using Contact_Management.Persistence.Membership;
+using Contact_ManageMent.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;

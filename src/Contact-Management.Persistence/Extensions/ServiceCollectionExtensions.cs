@@ -1,4 +1,5 @@
 ﻿using Contact_Management.Persistence.Membership;
+using Contact_ManageMent.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
