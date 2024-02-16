@@ -13,22 +13,16 @@ namespace Contact_MangeMent.API.Controllers
     public class AuthController : ControllerBase
     {
 
-        private readonly ITokenService _tokenService;
         private readonly ILogger<AuthController> _logger;
         private readonly IConfiguration _configuration;
         private readonly ILifetimeScope _scope;
-        private readonly IAuthenticationService _authenticationService;
         private readonly UserManager<ApplicationUser> _userManager;
         public AuthController(ILogger<AuthController> logger,
-            IAuthenticationService authenticationService,
             UserManager<ApplicationUser> userManager,
-            ITokenService tokenService,
             IConfiguration configuration,
             ILifetimeScope scope)
         {
             _logger = logger;
-            _authenticationService = authenticationService;
-            _tokenService = tokenService;
             _configuration = configuration;
             _scope = scope;
             _userManager = userManager;
@@ -56,9 +50,27 @@ namespace Contact_MangeMent.API.Controllers
             }
         }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            model.ResolveDependency(_scope);
+            var (success, result) = await model.LoginAsync();
 
-
+            if (success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Login failed. Please check your credentials.");
+                return BadRequest(ModelState);
+            }
+        }
 
 
     }

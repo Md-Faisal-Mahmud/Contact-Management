@@ -1,4 +1,5 @@
 ﻿using Contact_Management.Application.Services.Auth;
+using Contact_Management.Application.Services.Securities;
 using Contact_Management.Persistence.Membership;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -9,11 +10,18 @@ namespace Contact_Management.Infrastructure.Services.Auth
     public class AuthenticationService : IAuthenticationService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<AuthenticationService> _logger;
+        private readonly ITokenService _tokenService;
 
-        public AuthenticationService(UserManager<ApplicationUser> userManager, ILogger<AuthenticationService> logger)
+        public AuthenticationService(UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            ITokenService tokenService,
+            ILogger<AuthenticationService> logger)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
+            _tokenService = tokenService;
             _logger = logger;
         }
 
@@ -60,6 +68,58 @@ namespace Contact_Management.Infrastructure.Services.Auth
             }
 
             return false;
+        }
+
+        public async Task<(bool, object)> LoginAsync(string email, string password)
+        {
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                return (false, new { status = "error", message = "Please provide both email and password" });
+            }
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return (false, new { status = "error", message = "Invalid email address" });
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(user, password, true, lockoutOnFailure: true);
+            if (result.Succeeded)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                var claims = await _userManager.GetClaimsAsync(user);
+
+                var roleClaims = roles.Select(role => new Claim(ClaimTypes.Role, role));
+
+                foreach (var claim in roleClaims)
+                {
+                    claims.Add(claim);
+                }
+
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+
+                var token = await _tokenService.GetJwtToken(claims);
+
+                var userData = new
+                {
+                    id = user.Id,
+                    username = user.UserName,
+                    email = user.Email,
+                    claims = claims.Select(c => new { value = c.Value }),
+                };
+
+                return (true, new
+                {
+                    status = "Success",
+                    message = "Login successful",
+                    data = new { user = userData, token }
+                });
+            }
+            else
+            {
+                _logger.LogError("Failed login attempt for email {Email}. Reason: {Reason}", email, result.ToString());
+                return (false, new { status = "error", message = "Invalid credentials" });
+            }
         }
     }
 
