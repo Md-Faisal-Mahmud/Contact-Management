@@ -126,6 +126,7 @@ namespace Contact_Management.Infrastructure.Services.Auth
         {
             await _signInManager.SignOutAsync();
         }
+
     }
 
 }

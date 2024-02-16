@@ -43,6 +43,27 @@ namespace Contact_MangeMent.API.Controllers
             }
         }
 
-       
+        [Authorize]
+        [HttpPut("Contact")]
+        public IActionResult EditContact([FromBody] ContactEditModel model)
+        {
+            try
+            {
+                model.ResolveDependency(_scope);
+                // Get the currently logged-in user's ID
+                var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                model.Edit(Guid.Parse(userId));
+                return Ok("Contact Created Successfully!");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return StatusCode(500, "Oops! Something went wrong. Please try again later.");
+            }
+        }
+
+
+
     }
 }
