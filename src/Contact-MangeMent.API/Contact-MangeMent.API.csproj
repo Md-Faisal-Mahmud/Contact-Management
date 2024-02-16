@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Contact-Management.Application\Contact-Management.Application.csproj" />
+    <ProjectReference Include="..\Contact-Management.Infrastructure\Contact-Management.Infrastructure.csproj" />
     <ProjectReference Include="..\Contact-Management.Persistence\Contact-Management.Persistence.csproj" />
   </ItemGroup>
 

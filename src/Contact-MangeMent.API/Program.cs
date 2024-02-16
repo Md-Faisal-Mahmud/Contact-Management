@@ -1,6 +1,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Contact_Management.Application;
+using Contact_Management.Infrastructure;
 using Contact_Management.Persistence;
 using Contact_Management.Persistence.Extensions;
 using Contact_MangeMent.API;
@@ -33,7 +34,7 @@ try
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     {
         containerBuilder.RegisterModule(new ApplicationModule());
-        // containerBuilder.RegisterModule(new InfrastructureModule());
+        containerBuilder.RegisterModule(new InfrastructureModule());
         containerBuilder.RegisterModule(new PersistenceModule(connectionString,
             migrationAssembly));
         containerBuilder.RegisterModule(new ApiModule());
