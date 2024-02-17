@@ -62,6 +62,17 @@ try
             };
         });
 
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowAnyOrigin",
+            builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            });
+    });
+
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.AddSwagger();
@@ -87,6 +98,7 @@ try
     app.UseHttpsRedirection();
     app.UseAuthentication();
     app.UseAuthorization();
+    app.UseCors("AllowAnyOrigin");
     app.MapControllers();
     app.Run();
 }
