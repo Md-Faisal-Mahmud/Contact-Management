@@ -6,22 +6,25 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { RegisterComponent } from './Components/register/register.component';
 import { SigninComponent } from './Components/signin/signin.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './Core/requests.interceptor';
+import { ContactaddComponent } from './Components/contactadd/contactadd.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
-    SigninComponent
+    SigninComponent,
+    ContactaddComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule 
   ],
   providers: [
     provideClientHydration(),
