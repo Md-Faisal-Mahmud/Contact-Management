@@ -19,6 +19,21 @@ namespace Contact_Management.Infrastructure.Services.Contact
             _unitOfWork.Save();
         }
 
+        public void DeleteContact(Guid contactId,Guid currentUserID)
+        {
+            var contact = _unitOfWork.Contacts.GetById(contactId);
+            var contactOwnerId = contact.UserId;
+            if (contactOwnerId == currentUserID)
+            {
+                _unitOfWork.Contacts.Remove(contactId);
+                _unitOfWork.Save();
+            }
+            else 
+            {
+                throw new ForbiddenException("You try to delete someone else contact!");
+            }
+        }
+
         public void UpdateContact(Guid Id, Contact_ManageMent.Domain.Entities.Contact contact)
         {
             var _contact = _unitOfWork.Contacts.GetById(Id);
@@ -34,5 +49,7 @@ namespace Contact_Management.Infrastructure.Services.Contact
                 throw new ForbiddenException("You try to edit someone else contact!");
             }
         }
+
+
     }
 }

@@ -11,6 +11,7 @@ namespace Contact_MangeMent.API
             builder.RegisterType<RegisterModel>().AsSelf();
             builder.RegisterType<LoginModel>().AsSelf();
             builder.RegisterType<ContactCreateModel>().AsSelf();
+            builder.RegisterType<ContactListModel>().AsSelf();
             base.Load(builder);
         }
     }
