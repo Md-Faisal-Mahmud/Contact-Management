@@ -25,5 +25,10 @@ namespace Contact_MangeMent.API.Models.Contact
         {
            _contactService.DeleteContact(ContactId, CurrentUserId);
         }
+
+        public IList<Contact_ManageMent.Domain.Entities.Contact> GetContacts(Guid CurrentUserId)
+        {
+            return _contactService.GetContacts(CurrentUserId);
+        }
     }
 }

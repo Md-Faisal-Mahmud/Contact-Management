@@ -25,7 +25,7 @@ namespace Contact_MangeMent.API.Controllers
 
         [Authorize]
         [HttpPost("Contact")]
-        public  IActionResult AddContact([FromBody] ContactCreateModel model)
+        public IActionResult AddContact([FromBody] ContactCreateModel model)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace Contact_MangeMent.API.Controllers
             {
                 model.ResolveDependency(_scope);
                 var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                model.Delete(id,Guid.Parse(userId));
+                model.Delete(id, Guid.Parse(userId));
                 return Ok("Contact Deleted Successfully!");
             }
             catch (Exception ex)
@@ -83,7 +83,25 @@ namespace Contact_MangeMent.API.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet("Contact")]
+        public IActionResult GetContacts()
+        {
+            var model = _scope.Resolve<ContactListModel>();
+            try
+            {
+                model.ResolveDependency(_scope);
+                var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var contacts = model.GetContacts(Guid.Parse(userId));
+                return Ok(contacts);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
 
+                return StatusCode(500, "Oops! Something went wrong. Please try again later.");
+            }
+        }
 
     }
 }
